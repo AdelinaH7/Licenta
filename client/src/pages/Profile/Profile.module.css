@@ -1,0 +1,142 @@
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: table;
+  border-spacing: 5rem;
+}
+
+.containerLeft {
+  width: 30%;
+  background-color: #b0b3b8;
+  border-radius: 2rem;
+  display: table-cell;
+  padding: 2rem;
+  vertical-align: top;
+  width: 225px;
+}
+
+.userProfile {
+  display: block;
+  width: 224px;
+}
+
+.userImage {
+  display: block;
+  text-align: center;
+}
+
+.profilePic {
+  width: 14rem;
+  height: 120%;
+  border-radius: 1rem;
+}
+
+.profilePic:hover {
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+}
+
+.status {
+  list-style: none;
+}
+
+.status .username {
+  font-size: 30px;
+}
+
+.status span {
+  font-size: 20px;
+}
+
+.buttons {
+  margin-top: 10%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  background-color: #edf1f3;
+  border-radius: 20rem;
+  border: none;
+  color: #404040;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #404040;
+  border: none;
+  color: #fff;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+}
+
+.containerRight {
+  background-color: #b0b3b8;
+  border-radius: 2rem;
+  padding: 2rem;
+  display: table-cell;
+  vertical-align: top;
+}
+
+.aboutMe {
+  display: block;
+  text-align: center;
+}
+
+.banner {
+  width: 100%;
+  height: 28rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+
+.banner:hover {
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+}
+
+.containerRight h2 {
+  border-color: #222;
+  border-style: solid;
+  border-width: 0 0 1px;
+  margin-bottom: 1rem;
+}
+
+.containerRight h3 {
+  border-bottom: #222 1px solid;
+}
+
+.userStatisticsFirst {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.userStatisticsFirst div {
+  background-color: #edf1f3;
+  padding: 10px;
+  border-radius: 1rem;
+}
+
+.userStatisticsFirst div:hover {
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+}
+
+.userStatisticsSecond {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.userStatisticsSecond div {
+  background-color: #edf1f3;
+  padding: 10px;
+  border-radius: 1rem;
+}
+
+.userStatisticsSecond div:hover {
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+}

@@ -1,0 +1,9 @@
+{
+  "db": {
+    "dbname": "licenta",
+    "dbusername": "root",
+    "dbpass": "",
+    "dblang": "mysql",
+    "host": "localhost"
+  }
+}
