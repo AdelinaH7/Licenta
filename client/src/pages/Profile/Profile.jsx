@@ -21,8 +21,6 @@ function Profile() {
           }
         );
         const data = await response.json();
-
-        //setProfilePicture(data.picture.toString("utf8"));
         const base64String = Buffer.from(data.picture.data).toString("utf8");
         setProfilePicture(base64String);
         setUserData(data);

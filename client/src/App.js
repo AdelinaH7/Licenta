@@ -10,6 +10,7 @@ import Default from "./pages/Default/Default";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import Footer from "./components/Footer/Footer";
+import Admin from "./pages/Admin/Admin";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/movies" element={<MovieList />} />
             <Route path="/shows" element={<ShowList />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/admin" element={<Admin />} />
 
             <Route path="/" element={<Default />} />
             <Route path="/register" element={<Register />} />

@@ -23,6 +23,12 @@
   color: #fff;
 }
 
+.adminText {
+  font-size: 1.5rem;
+  color: red;
+  font-weight: bold;
+}
+
 .title:hover {
   cursor: pointer;
 }

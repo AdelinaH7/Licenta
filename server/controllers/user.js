@@ -94,6 +94,7 @@ const controller = {
         email: req.body.email,
         birthday: req.body.birthday,
         picture: req.body.picture,
+        isAdmin: req.body.isAdmin,
       };
       const userId = req.params.id;
 

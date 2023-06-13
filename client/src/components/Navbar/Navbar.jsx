@@ -8,16 +8,26 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("id");
+    localStorage.removeItem("isAdmin");
     navigate("/login");
   };
 
   const isLoggedIn = localStorage.getItem("loggedIn") === "da";
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
 
   return (
     <div className={styles.layout}>
       <div className={styles.container}>
         <Link to="/">
-          <p className={styles.title}>My Movie List</p>
+          <p className={styles.title}>
+            {isAdmin ? (
+              <>
+                My Movie List's <span className={styles.adminText}>Admin</span>
+              </>
+            ) : (
+              "My Movie List"
+            )}
+          </p>
         </Link>
         <div className={styles.buttons}>
           <Link to="/movies">
@@ -27,8 +37,10 @@ function Navbar() {
             <p className={styles.button}>Shows</p>
           </Link>
           {isLoggedIn && (
-            <Link to="/profile">
-              <p className={styles.button}>Profile</p>
+            <Link to={isAdmin ? "/admin" : "/profile"}>
+              <p className={styles.button}>
+                {isAdmin ? "Admin Page" : "Profile"}
+              </p>
             </Link>
           )}
           {isLoggedIn && (

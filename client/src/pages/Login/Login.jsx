@@ -6,7 +6,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const history = useNavigate();
 
   const handleFormSubmit = async (event) => {
@@ -30,9 +30,19 @@ function Login() {
         .then((data) => {
           const userId = data.user.user_id;
           console.log("userId:" + userId);
+
+          const isAdmin = data.user.isAdmin;
+          console.log("isAdmin:", isAdmin); // Debugging statement
+
           localStorage.setItem("id", userId);
+          localStorage.setItem("isAdmin", isAdmin);
         });
-      history("/profile");
+      //history("/profile");
+      if (localStorage.getItem("isAdmin") === "true") {
+        history("/admin");
+      } else {
+        history("/profile");
+      }
     } catch (error) {
       setError(error.message);
     }
