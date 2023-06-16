@@ -4,7 +4,7 @@ const juncShowController = require("../controllers").juncShow;
 
 router.get("/", juncShowController.getAllJuncsShow);
 router.get("/users/:id", juncShowController.getAllUsersOfShow);
-router.get("/shows", juncShowController.getAllShowsOfUser);
+router.get("/shows/:user_id", juncShowController.getAllShowsOfUser);
 router.get("/:user_id/:show_id", juncShowController.getJuncShowById);
 router.post("/:id", juncShowController.createJuncShow);
 router.delete("/:user_id/:show_id", juncShowController.deleteJuncShow);

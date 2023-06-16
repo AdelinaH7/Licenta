@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Profile.module.css";
 import { Link } from "react-router-dom";
 import childe from "../../assets/childe.jpg";
@@ -7,6 +7,8 @@ import { Buffer } from "buffer";
 function Profile() {
   const [userData, setUserData] = useState({});
   const [profilePicture, setProfilePicture] = useState("");
+  const [lastMovieUpdates, setLastMovieUpdates] = useState([]);
+  const [lastShowUpdates, setLastShowUpdates] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -28,7 +30,48 @@ function Profile() {
         console.log(err);
       }
     };
+
+    const fetchLastMovieUpdates = async () => {
+      try {
+        const userId = localStorage.getItem("id");
+        const response = await fetch(
+          `http://localhost:8080/api/juncMovie/movies/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        setLastMovieUpdates(data.slice(-3)); // Get the last three movies
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const fetchLastShowUpdates = async () => {
+      try {
+        const userId = localStorage.getItem("id");
+        const response = await fetch(
+          `http://localhost:8080/api/juncShow/shows/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        setLastShowUpdates(data.slice(-3)); // Get the last three shows
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     fetchUserData();
+    fetchLastMovieUpdates();
+    fetchLastShowUpdates();
   }, []);
 
   return (
@@ -68,7 +111,7 @@ function Profile() {
         </div>
         <div className={styles.containerRight}>
           <div className={styles.aboutMe}>
-            <img className={styles.banner} src={childe}></img>
+            <img className={styles.banner} src={childe} alt="Banner"></img>
           </div>
           <div className={styles.userStatisticsContainer}>
             <h2>Statistics</h2>
@@ -83,7 +126,11 @@ function Profile() {
               </div>
               <div className={styles.updatesMoviesOrShows}>
                 <h3>Last Movies Updates</h3>
-                {/* componenta: item in lista */}
+                <ul>
+                  {lastMovieUpdates.map((movie) => (
+                    <li key={movie.movie_id}>{movie.name}</li>
+                  ))}
+                </ul>
               </div>
             </div>
 
@@ -98,7 +145,11 @@ function Profile() {
               </div>
               <div className={styles.updatesMoviesOrShows}>
                 <h3>Last Shows Updates</h3>
-                {/* componenta: item in lista */}
+                <ul>
+                  {lastShowUpdates.map((show) => (
+                    <li key={show.show_id}>{show.name}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>

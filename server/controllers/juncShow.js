@@ -88,7 +88,7 @@ const controller = {
   },
 
   getAllShowsOfUser: async (req, res) => {
-    const user_id = req.body.user.user_id;
+    const user_id = req.params.user_id; // Retrieve user ID from route parameters
 
     try {
       if (!user_id) throw new Error("undefined");

@@ -11,7 +11,6 @@
 }
 
 .containerLeft {
-  width: 30%;
   background-color: #b0b3b8;
   border-radius: 2rem;
   display: table-cell;
@@ -59,11 +58,12 @@
 }
 
 .button {
+  width: 110%;
   background-color: #edf1f3;
   border-radius: 20rem;
   border: none;
   color: #404040;
-  padding: 0.5rem 1rem 0.5rem 1rem;
+  padding: 0.5rem;
   cursor: pointer;
 }
 

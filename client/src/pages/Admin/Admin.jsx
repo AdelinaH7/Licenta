@@ -175,11 +175,11 @@ function Admin() {
               </li>
             </ul>
             <div className={styles.buttons}>
-              <Link to="/myMovies">
-                <p className={styles.button}>Movie List</p>
+              <Link to="/add-movie">
+                <p className={styles.button}>Add Movie</p>
               </Link>
-              <Link to="/myShows">
-                <p className={styles.button}>Show List</p>
+              <Link to="/add-show">
+                <p className={styles.button}>Add Show</p>
               </Link>
             </div>
           </div>

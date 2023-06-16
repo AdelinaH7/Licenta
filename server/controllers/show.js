@@ -43,7 +43,7 @@ const controller = {
         releaseDate: req.body.releaseDate,
         episodes: req.body.episodes,
         synopsis: req.body.synopsis,
-        picture: req.body.picture,
+        picture: req.body.pictureName,
       };
       for (let camp in show) {
         if (show[camp] === undefined) {

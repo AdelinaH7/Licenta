@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       picture: {
-        type: DataTypes.BLOB,
+        type: DataTypes.BLOB("long"),
         allowNull: true,
       },
     },

@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Fragment, useContext, useEffect, useState } from "react";
-import axios from "axios";
+import { Fragment } from "react";
 import "./assets/App.css";
 import MovieList from "./pages/MovieList/MovieList";
 import ShowList from "./pages/ShowList/ShowList";
@@ -11,6 +10,8 @@ import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import Footer from "./components/Footer/Footer";
 import Admin from "./pages/Admin/Admin";
+import AddMovie from "./pages/AddMovie/AddMovie";
+import AddShow from "./pages/AddShow/AddShow";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
             <Route path="/shows" element={<ShowList />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/add-movie" element={<AddMovie />} />
+            <Route path="/add-show" element={<AddShow />} />
 
             <Route path="/" element={<Default />} />
             <Route path="/register" element={<Register />} />

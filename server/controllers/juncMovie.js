@@ -93,7 +93,7 @@ const controller = {
   },
 
   getAllMoviesOfUser: async (req, res) => {
-    const user_id = req.body.user.user_id;
+    const user_id = req.params.user_id; // Retrieve user ID from route parameters
 
     try {
       if (!user_id) throw new Error("undefined");
@@ -119,9 +119,9 @@ const controller = {
       if (err.message === "undefined")
         res.status(404).send({ message: "The ID for the user is not entered" });
       else if (err.message === "Empty")
-        res.status(404).send({ message: `User ID${user_id} does not exist!` });
+        res.status(404).send({ message: `User ID ${user_id} does not exist!` });
       else if (err.message === "Zero instances for the juncMovie")
-        res.status(404).send({ message: `User id${user_id} has no movies` });
+        res.status(404).send({ message: `User ID ${user_id} has no movies` });
       else if (err.message === "No movies")
         res.status(404).send({ message: "No movie found" });
       else res.status(500).send({ message: "Server error!" });
@@ -132,6 +132,7 @@ const controller = {
     const juncMovie = {
       user_id: req.body.user.user_id,
       movie_id: req.params.id,
+      isFavourite: false, // Set isFavourite to false by default
     };
 
     try {
@@ -165,6 +166,49 @@ const controller = {
           message: `User ID${juncMovie.user_id} has already added the movie ID${juncMovie.movie_id}`,
         });
       else res.status(500).send({ message: "Server error!" });
+    }
+  },
+
+  updateJuncMovie: async (req, res) => {
+    const ids = {
+      user_id: req.params.user_id,
+      movie_id: req.params.movie_id,
+    };
+
+    try {
+      if (ids.user_id === undefined || ids.movie_id === undefined)
+        throw new Error("undefined");
+
+      const juncMovie = await JuncMovieDb.findOne({
+        where: {
+          user_id: ids.user_id,
+          movie_id: ids.movie_id,
+        },
+      });
+
+      if (!juncMovie) throw new Error("Empty");
+
+      // Update the isFavourite field based on the user's input
+      juncMovie.isFavourite = true; // Assuming the user marks the movie as favorite
+
+      await juncMovie.save(); // Save the changes to the database
+
+      res.status(200).send({
+        message: "The movie has been marked as favorite.",
+        juncMovie,
+      });
+    } catch (err) {
+      if (err.message === "undefined") {
+        res
+          .status(400)
+          .send({ message: "One or both of the IDs has not been entered" });
+      } else if (err.message === "Empty") {
+        res.status(404).send({
+          message: `User ${ids.user_id} has no film added with ID ${ids.movie_id}`,
+        });
+      } else {
+        res.status(500).send({ message: "Server error!" });
+      }
     }
   },
 

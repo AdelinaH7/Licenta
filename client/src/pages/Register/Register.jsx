@@ -29,14 +29,9 @@ function Register() {
     if (picture != null) {
       const data = new FormData();
       data.append("file", picture);
-      axios
-        .post("http://localhost:8080/api/upload/", data, {
-          // receive two    parameter endpoint url ,form data
-        })
-        .then((res) => {
-          // then print response status
-          console.log(res.statusText);
-        });
+      axios.post("http://localhost:8080/api/upload/", data, {}).then((res) => {
+        console.log(res.statusText);
+      });
     }
   }, [picture]);
 
