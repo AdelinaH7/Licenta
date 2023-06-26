@@ -3,7 +3,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Register.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 function Register() {
@@ -14,6 +14,7 @@ function Register() {
   const [picture, setPicture] = useState(null);
   const [errors, setErrors] = useState({});
   const [isChecked, setIsChecked] = useState(false);
+  const history = useNavigate();
 
   function convertToBase64(file, callback) {
     const reader = new FileReader();
@@ -50,9 +51,10 @@ function Register() {
             pictureName: base64String,
           });
           console.log(response.data);
+          history("/login");
         });
       } catch (error) {
-        console.error(error);
+        //console.error(error);
       }
     } else {
       setErrors(validationErrors);

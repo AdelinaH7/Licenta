@@ -12,6 +12,8 @@ import Footer from "./components/Footer/Footer";
 import Admin from "./pages/Admin/Admin";
 import AddMovie from "./pages/AddMovie/AddMovie";
 import AddShow from "./pages/AddShow/AddShow";
+import UserMovieList from "./pages/UserMovieList/UserMovieList";
+import UserShowList from "./pages/UserShowList/UserShowList";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/add-movie" element={<AddMovie />} />
             <Route path="/add-show" element={<AddShow />} />
+            <Route path="/myMovies" element={<UserMovieList />} />
+            <Route path="/myShows" element={<UserShowList />} />
 
             <Route path="/" element={<Default />} />
             <Route path="/register" element={<Register />} />

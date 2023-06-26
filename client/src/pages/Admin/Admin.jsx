@@ -169,10 +169,6 @@ function Admin() {
                 <span>Birthday: </span>
                 <span>{userData.birthday}</span>
               </li>
-              <li>
-                <span>Gender: </span>
-                <span>to do</span>
-              </li>
             </ul>
             <div className={styles.buttons}>
               <Link to="/add-movie">

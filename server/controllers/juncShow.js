@@ -162,6 +162,142 @@ const controller = {
     }
   },
 
+  updateJuncShow: async (req, res) => {
+    const ids = {
+      user_id: req.params.user_id,
+      show_id: req.params.show_id,
+    };
+
+    try {
+      if (ids.user_id === undefined || ids.show_id === undefined)
+        throw new Error("undefined");
+
+      const juncShow = await JuncShowDb.findOne({
+        where: {
+          user_id: ids.user_id,
+          show_id: ids.show_id,
+        },
+      });
+
+      if (!juncShow) throw new Error("Empty");
+
+      juncShow.isFavourite = true;
+
+      await juncShow.save();
+
+      res.status(200).send({
+        message: "The show has been marked as favorite.",
+        juncShow,
+      });
+    } catch (err) {
+      if (err.message === "undefined") {
+        res
+          .status(400)
+          .send({ message: "One or both of the IDs has not been entered" });
+      } else if (err.message === "Empty") {
+        res.status(404).send({
+          message: `User ${ids.user_id} has no film added with ID ${ids.show_id}`,
+        });
+      } else {
+        res.status(500).send({ message: "Server error!" });
+      }
+    }
+  },
+
+  updateJuncShowScore: async (req, res) => {
+    const ids = {
+      user_id: req.params.user_id,
+      show_id: req.params.show_id,
+    };
+
+    try {
+      if (ids.user_id === undefined || ids.show_id === undefined)
+        throw new Error("undefined");
+
+      const juncShow = await JuncShowDb.findOne({
+        where: {
+          user_id: ids.user_id,
+          show_id: ids.show_id,
+        },
+      });
+
+      if (!juncShow) throw new Error("Empty");
+
+      // Update the score field based on the user's input
+      const { score } = req.body;
+      if (score === undefined) throw new Error("Score is not specified");
+      juncShow.score = score;
+
+      await juncShow.save(); // Save the changes to the database
+
+      res.status(200).send({
+        message: "The score has been updated.",
+        juncShow,
+      });
+    } catch (err) {
+      if (err.message === "undefined") {
+        res
+          .status(400)
+          .send({ message: "One or both of the IDs has not been entered" });
+      } else if (err.message === "Empty") {
+        res.status(404).send({
+          message: `User ${ids.user_id} has no film added with ID ${ids.show_id}`,
+        });
+      } else if (err.message === "Score is not specified") {
+        res.status(400).send({ message: "Score is not specified" });
+      } else {
+        res.status(500).send({ message: "Server error!" });
+      }
+    }
+  },
+
+  updateJuncShowScore: async (req, res) => {
+    const ids = {
+      user_id: req.params.user_id,
+      show_id: req.params.show_id,
+    };
+
+    try {
+      if (ids.user_id === undefined || ids.show_id === undefined)
+        throw new Error("undefined");
+
+      const juncShow = await JuncShowDb.findOne({
+        where: {
+          user_id: ids.user_id,
+          show_id: ids.show_id,
+        },
+      });
+
+      if (!juncShow) throw new Error("Empty");
+
+      // Update the score field based on the user's input
+      const { score } = req.body;
+      if (score === undefined) throw new Error("Score is not specified");
+      juncShow.score = score;
+
+      await juncShow.save(); // Save the changes to the database
+
+      res.status(200).send({
+        message: "The score has been updated.",
+        juncShow,
+      });
+    } catch (err) {
+      if (err.message === "undefined") {
+        res
+          .status(400)
+          .send({ message: "One or both of the IDs have not been entered" });
+      } else if (err.message === "Empty") {
+        res.status(404).send({
+          message: `User ${ids.user_id} has no show added with ID ${ids.show_id}`,
+        });
+      } else if (err.message === "Score is not specified") {
+        res.status(400).send({ message: "Score is not specified" });
+      } else {
+        res.status(500).send({ message: "Server error!" });
+      }
+    }
+  },
+
   deleteJuncShow: async (req, res) => {
     const ids = {
       user_id: req.params.user_id,

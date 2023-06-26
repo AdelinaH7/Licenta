@@ -1,6 +1,6 @@
 .item {
   display: flex;
-  background-color: #b0b3b8;
+  background-color: #8d99ae;
   padding: 1rem;
   border-radius: 2rem;
   justify-content: space-between;
@@ -33,17 +33,22 @@
 }
 
 .button {
-  background-color: #edf1f3;
+  background-color: #2b2d42;
   border-radius: 20rem;
   border: none;
-  color: #404040;
+  color: #fff;
   padding: 0.5rem 1rem 0.5rem 1rem;
   cursor: pointer;
   margin-top: 1rem;
 }
 
 .button:hover {
-  background-color: #404040;
+  background-color: #ef233c;
   border: none;
   color: #fff;
+}
+
+.title span {
+  font-size: 2rem;
+  color: #d90429;
 }

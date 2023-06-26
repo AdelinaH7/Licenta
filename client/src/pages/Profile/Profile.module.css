@@ -12,7 +12,7 @@
 
 .containerLeft {
   width: 30%;
-  background-color: #b0b3b8;
+  background-color: #8d99ae;
   border-radius: 2rem;
   display: table-cell;
   padding: 2rem;
@@ -34,6 +34,7 @@
   width: 14rem;
   height: 120%;
   border-radius: 1rem;
+  margin-bottom: 1rem;
 }
 
 .profilePic:hover {
@@ -44,8 +45,8 @@
   list-style: none;
 }
 
-.status .username {
-  font-size: 30px;
+.title {
+  font-size: 50px;
 }
 
 .status span {
@@ -59,10 +60,10 @@
 }
 
 .button {
-  background-color: #edf1f3;
+  background-color: #d90429;
   border-radius: 20rem;
   border: none;
-  color: #404040;
+  color: #fff;
   padding: 0.5rem 1rem 0.5rem 1rem;
   cursor: pointer;
 }
@@ -75,7 +76,7 @@
 }
 
 .containerRight {
-  background-color: #b0b3b8;
+  background-color: #8d99ae;
   border-radius: 2rem;
   padding: 2rem;
   display: table-cell;
@@ -89,24 +90,17 @@
 
 .banner {
   width: 100%;
-  height: 28rem;
+  height: 20rem;
   border-radius: 1rem;
   margin-bottom: 1rem;
 }
 
-.banner:hover {
-  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
-}
-
 .containerRight h2 {
+  font-size: 1.5rem;
   border-color: #222;
   border-style: solid;
   border-width: 0 0 1px;
   margin-bottom: 1rem;
-}
-
-.containerRight h3 {
-  border-bottom: #222 1px solid;
 }
 
 .userStatisticsFirst {
@@ -117,7 +111,7 @@
 
 .userStatisticsFirst div {
   background-color: #edf1f3;
-  padding: 10px;
+  padding: 15px 30px;
   border-radius: 1rem;
 }
 
@@ -133,10 +127,44 @@
 
 .userStatisticsSecond div {
   background-color: #edf1f3;
-  padding: 10px;
+  padding: 15px 30px;
   border-radius: 1rem;
 }
 
 .userStatisticsSecond div:hover {
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+}
+
+.usernameUpdate {
+  display: flex;
+  align-items: center;
+}
+
+.usernameInput {
+  margin-right: 10px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.updateButton {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: green;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.editButton {
+  margin-left: 3rem;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: yellow;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
 }

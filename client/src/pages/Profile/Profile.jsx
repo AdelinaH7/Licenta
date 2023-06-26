@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave, faEdit } from "@fortawesome/free-solid-svg-icons";
+
 import styles from "./Profile.module.css";
 import { Link } from "react-router-dom";
-import childe from "../../assets/childe.jpg";
 import { Buffer } from "buffer";
+import logo from "../../assets/logo.png";
 
 function Profile() {
   const [userData, setUserData] = useState({});
   const [profilePicture, setProfilePicture] = useState("");
   const [lastMovieUpdates, setLastMovieUpdates] = useState([]);
   const [lastShowUpdates, setLastShowUpdates] = useState([]);
+  const [updatedUsername, setUpdatedUsername] = useState("");
+  const [editingUsername, setEditingUsername] = useState(false);
+  const [meanScore, setMeanScore] = useState(0);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -44,7 +50,7 @@ function Profile() {
           }
         );
         const data = await response.json();
-        setLastMovieUpdates(data.slice(-3)); // Get the last three movies
+        setLastMovieUpdates(data.slice(-3));
       } catch (err) {
         console.log(err);
       }
@@ -63,7 +69,27 @@ function Profile() {
           }
         );
         const data = await response.json();
-        setLastShowUpdates(data.slice(-3)); // Get the last three shows
+        setLastShowUpdates(data.slice(-3));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const fetchMeanScore = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/juncMovie", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        const userId = parseInt(localStorage.getItem("id"), 10); // Convert to number
+        const userMovies = data.filter((movie) => movie.user_id === userId);
+        const scores = userMovies.map((movie) => movie.score);
+        const sum = scores.reduce((acc, score) => acc + score, 0);
+        const mean = sum / scores.length || 0;
+        setMeanScore(mean);
       } catch (err) {
         console.log(err);
       }
@@ -72,7 +98,41 @@ function Profile() {
     fetchUserData();
     fetchLastMovieUpdates();
     fetchLastShowUpdates();
+    fetchMeanScore();
   }, []);
+
+  const handleUsernameClick = () => {
+    setEditingUsername(true);
+  };
+
+  const handleUsernameChange = (e) => {
+    setUpdatedUsername(e.target.value);
+  };
+
+  const handleUsernameUpdate = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/user/${localStorage.getItem("id")}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: updatedUsername }),
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data);
+        setUpdatedUsername("");
+        setEditingUsername(false);
+      } else {
+        console.log("Username update failed");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className={styles.content}>
@@ -88,15 +148,39 @@ function Profile() {
             </div>
             <ul className={styles.status}>
               <li>
-                <span className={styles.username}>{userData.username}</span>
+                {editingUsername ? (
+                  <div className={styles.usernameUpdate}>
+                    <input
+                      type="text"
+                      value={updatedUsername}
+                      onChange={handleUsernameChange}
+                      className={styles.usernameInput}
+                    />
+                    <button
+                      onClick={handleUsernameUpdate}
+                      className={styles.updateButton}
+                    >
+                      <FontAwesomeIcon
+                        icon={faSave}
+                        className={styles.updateIcon}
+                      />
+                    </button>
+                  </div>
+                ) : (
+                  <span className={styles.title}>
+                    {userData.username}
+                    <button
+                      className={styles.editButton}
+                      onClick={handleUsernameClick}
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                  </span>
+                )}
               </li>
               <li>
                 <span>Birthday: </span>
                 <span>{userData.birthday}</span>
-              </li>
-              <li>
-                <span>Gender: </span>
-                <span>to do</span>
               </li>
             </ul>
             <div className={styles.buttons}>
@@ -111,7 +195,7 @@ function Profile() {
         </div>
         <div className={styles.containerRight}>
           <div className={styles.aboutMe}>
-            <img className={styles.banner} src={childe} alt="Banner"></img>
+            <img className={styles.banner} src={logo} alt="Banner"></img>
           </div>
           <div className={styles.userStatisticsContainer}>
             <h2>Statistics</h2>
@@ -120,7 +204,7 @@ function Profile() {
                 <h3>Movie Stats</h3>
                 <div className={styles.statScore}>
                   <span>Days:</span>
-                  <span>Mean Score:</span>
+                  <span>Mean Score: {meanScore}</span>
                 </div>
                 <div className={styles.statGraph}></div>
               </div>

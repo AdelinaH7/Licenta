@@ -112,7 +112,7 @@ function ItemListShow({ searchTerm }) {
             />
           )}
           <ul>
-            <li key={`title-${item.show_id}`}>
+            <li className={styles.title} key={`title-${item.show_id}`}>
               <span>Title: </span>
               <span>{item.name}</span>
             </li>
@@ -127,6 +127,10 @@ function ItemListShow({ searchTerm }) {
             <li key={`episodes-${item.show_id}`}>
               <span>Number of episodes: </span>
               <span>{item.episodes}</span>
+            </li>
+            <li key={`duration-${item.movie_id}`}>
+              <span>Synopsys: </span>
+              <span>{item.synopsys}</span>
             </li>
           </ul>
           <div className={styles.buttons}>

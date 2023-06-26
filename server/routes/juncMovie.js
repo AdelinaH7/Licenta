@@ -8,6 +8,10 @@ router.get("/movies/:user_id", juncMovieController.getAllMoviesOfUser);
 router.get("/:user_id/:movie_id", juncMovieController.getJuncMovieById);
 router.post("/:id", juncMovieController.createJuncMovie); //merge
 router.put("/:user_id/:movie_id/favorite", juncMovieController.updateJuncMovie);
+router.put(
+  "/:user_id/:movie_id/score",
+  juncMovieController.updateJuncMovieScore
+);
 /*http://localhost:8080/api/juncMovie/3 (movie id)
 {
     "user" : {

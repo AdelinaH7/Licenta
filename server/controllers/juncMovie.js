@@ -93,7 +93,7 @@ const controller = {
   },
 
   getAllMoviesOfUser: async (req, res) => {
-    const user_id = req.params.user_id; // Retrieve user ID from route parameters
+    const user_id = req.params.user_id;
 
     try {
       if (!user_id) throw new Error("undefined");
@@ -189,12 +189,17 @@ const controller = {
       if (!juncMovie) throw new Error("Empty");
 
       // Update the isFavourite field based on the user's input
-      juncMovie.isFavourite = true; // Assuming the user marks the movie as favorite
+      const { isFavourite } = req.body;
+      if (isFavourite === undefined)
+        throw new Error("isFavourite is not specified");
+      juncMovie.isFavourite = isFavourite;
 
       await juncMovie.save(); // Save the changes to the database
 
       res.status(200).send({
-        message: "The movie has been marked as favorite.",
+        message: `The movie has been ${
+          isFavourite ? "marked as favourite" : "unmarked as favourite"
+        }.`,
         juncMovie,
       });
     } catch (err) {
@@ -206,6 +211,55 @@ const controller = {
         res.status(404).send({
           message: `User ${ids.user_id} has no film added with ID ${ids.movie_id}`,
         });
+      } else if (err.message === "isFavourite is not specified") {
+        res.status(400).send({ message: "isFavourite is not specified" });
+      } else {
+        res.status(500).send({ message: "Server error!" });
+      }
+    }
+  },
+
+  updateJuncMovieScore: async (req, res) => {
+    const ids = {
+      user_id: req.params.user_id,
+      movie_id: req.params.movie_id,
+    };
+
+    try {
+      if (ids.user_id === undefined || ids.movie_id === undefined)
+        throw new Error("undefined");
+
+      const juncMovie = await JuncMovieDb.findOne({
+        where: {
+          user_id: ids.user_id,
+          movie_id: ids.movie_id,
+        },
+      });
+
+      if (!juncMovie) throw new Error("Empty");
+
+      // Update the score field based on the user's input
+      const { score } = req.body;
+      if (score === undefined) throw new Error("Score is not specified");
+      juncMovie.score = score;
+
+      await juncMovie.save(); // Save the changes to the database
+
+      res.status(200).send({
+        message: "The score has been updated.",
+        juncMovie,
+      });
+    } catch (err) {
+      if (err.message === "undefined") {
+        res
+          .status(400)
+          .send({ message: "One or both of the IDs has not been entered" });
+      } else if (err.message === "Empty") {
+        res.status(404).send({
+          message: `User ${ids.user_id} has no film added with ID ${ids.movie_id}`,
+        });
+      } else if (err.message === "Score is not specified") {
+        res.status(400).send({ message: "Score is not specified" });
       } else {
         res.status(500).send({ message: "Server error!" });
       }

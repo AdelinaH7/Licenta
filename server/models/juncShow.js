@@ -23,6 +23,18 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "cascade",
       onUpdate: "cascade",
     },
+    isFavourite: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      onDelete: "cascade",
+      onUpdate: "cascade", // Assuming the default value is false when a movie is not marked as favorite
+    },
+    score: {
+      type: DataTypes.INTEGER,
+      defaultValue: false,
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    },
   });
   return juncShow;
 };
