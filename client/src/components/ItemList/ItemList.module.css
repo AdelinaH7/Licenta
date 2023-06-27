@@ -1,3 +1,9 @@
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .item {
   display: flex;
   background-color: #8d99ae;
@@ -5,8 +11,8 @@
   border-radius: 2rem;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  gap: 9rem;
+  width: 60%;
+  gap: 2rem;
   margin-bottom: 2rem;
 }
 
@@ -15,7 +21,7 @@
 }
 
 .poster {
-  width: 9rem;
+  width: 11rem;
   height: 100%;
   border-radius: 1rem;
 }
@@ -50,5 +56,12 @@
 
 .title span {
   font-size: 2rem;
-  color: #d90429;
+  font-weight: bold;
 }
+
+/*.synopsis {
+  display: inline-block;
+  width: 50%; /* Adjust the width as needed 
+  word-wrap: break-word;
+  word-break: break-all;
+}*/

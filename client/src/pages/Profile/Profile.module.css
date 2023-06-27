@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  color: #fff;
 }
 
 .container {
@@ -12,7 +13,7 @@
 
 .containerLeft {
   width: 30%;
-  background-color: #8d99ae;
+  background-color: #2b2d42;
   border-radius: 2rem;
   display: table-cell;
   padding: 2rem;
@@ -46,11 +47,17 @@
 }
 
 .title {
-  font-size: 50px;
+  font-weight: bold;
 }
 
 .status span {
-  font-size: 20px;
+  font-size: 30px;
+}
+
+.ceva {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttons {
@@ -69,14 +76,14 @@
 }
 
 .button:hover {
-  background-color: #404040;
+  background-color: #8d99ae;
   border: none;
   color: #fff;
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
 }
 
 .containerRight {
-  background-color: #8d99ae;
+  background-color: #2b2d42;
   border-radius: 2rem;
   padding: 2rem;
   display: table-cell;
@@ -97,10 +104,8 @@
 
 .containerRight h2 {
   font-size: 1.5rem;
-  border-color: #222;
-  border-style: solid;
-  border-width: 0 0 1px;
   margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 .userStatisticsFirst {
@@ -110,13 +115,26 @@
 }
 
 .userStatisticsFirst div {
-  background-color: #edf1f3;
+  background-color: #8d99ae;
   padding: 15px 30px;
   border-radius: 1rem;
 }
 
-.userStatisticsFirst div:hover {
+ul {
+  list-style: none;
+}
+
+.statsMoviesOrShows:hover {
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
+}
+
+.statsMoviesOrShows {
+  width: 65%;
+}
+
+.statScore {
+  display: flex;
+  justify-content: space-between;
 }
 
 .userStatisticsSecond {
@@ -126,13 +144,9 @@
 }
 
 .userStatisticsSecond div {
-  background-color: #edf1f3;
+  background-color: #8d99ae;
   padding: 15px 30px;
   border-radius: 1rem;
-}
-
-.userStatisticsSecond div:hover {
-  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.4);
 }
 
 .usernameUpdate {
@@ -159,11 +173,11 @@
 }
 
 .editButton {
-  margin-left: 3rem;
+  margin-left: 1rem;
   padding: 6px 12px;
   border: none;
-  border-radius: 4px;
-  background-color: yellow;
+  border-radius: 6rem;
+  background-color: #2b2d42;
   color: #fff;
   font-size: 14px;
   cursor: pointer;

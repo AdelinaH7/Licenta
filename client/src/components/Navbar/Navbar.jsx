@@ -22,10 +22,10 @@ function Navbar() {
           <p className={styles.title}>
             {isAdmin ? (
               <>
-                My Movie List's <span className={styles.adminText}>Admin</span>
+                My Watch List's <span className={styles.adminText}>Admin</span>
               </>
             ) : (
-              "My Movie List"
+              "My Watch List"
             )}
           </p>
         </Link>

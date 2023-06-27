@@ -10,6 +10,9 @@ function Admin() {
   const [showAllUsers, setShowAllUsers] = useState(false);
   const [showAdmins, setShowAdmins] = useState(false);
   const [showNonAdmins, setShowNonAdmins] = useState(false);
+  const [totalMovies, setTotalMovies] = useState(0);
+  const [totalShows, setTotalShows] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
   const history = useNavigate();
 
   useEffect(() => {
@@ -43,6 +46,8 @@ function Admin() {
       history("/profile");
     } else {
       fetchUsers();
+      fetchMovies();
+      fetchShows();
     }
   }, [history]);
 
@@ -57,6 +62,36 @@ function Admin() {
       const data = await response.json();
       setUsers(data);
       setShowAllUsers(true); // Set showAllUsers to true when fetching users
+      setTotalUsers(data.length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchMovies = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/movie", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setTotalMovies(data.length); // Update totalMovies count
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchShows = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/show", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setTotalShows(data.length); // Update totalShows count
     } catch (err) {
       console.log(err);
     }
@@ -178,6 +213,12 @@ function Admin() {
                 <p className={styles.button}>Add Show</p>
               </Link>
             </div>
+          </div>
+          <div className={styles.dashboard}>
+            <h1>Dashboard</h1>
+            <p>{totalMovies} Movies</p>
+            <p>{totalShows} Shows</p>
+            <p>{totalUsers} Users</p>
           </div>
         </div>
         <div className={styles.containerRight}>

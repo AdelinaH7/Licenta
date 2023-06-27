@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./ItemList.module.css";
 import { Buffer } from "buffer";
 
-function ItemList({ searchTerm }) {
+function ItemList({ searchTerm, selectedGenre }) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -96,12 +96,18 @@ function ItemList({ searchTerm }) {
     return <div>No movies found</div>;
   }
 
-  const filteredItems = items.filter((item) =>
+  let filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  if (selectedGenre) {
+    filteredItems = filteredItems.filter((item) =>
+      item.genre.toLowerCase().includes(selectedGenre.toLowerCase())
+    );
+  }
+
   return (
-    <div>
+    <div className={styles.center}>
       {filteredItems.map((item) => (
         <div key={item.movie_id} className={styles.item}>
           {item.poster && (
@@ -129,9 +135,11 @@ function ItemList({ searchTerm }) {
               <span>{item.duration}</span>
               <span> minutes</span>
             </li>
-            <li key={`duration-${item.movie_id}`}>
-              <span>Synopsys: </span>
-              <span>{item.synopsys}</span>
+            <li key={`synopsis-${item.movie_id}`}>
+              <span className={styles.synopsis}>
+                {" "}
+                Storyline: {item.synopsis}
+              </span>
             </li>
           </ul>
           <div className={styles.buttons}>

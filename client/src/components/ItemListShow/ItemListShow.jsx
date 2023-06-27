@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./ItemListShow.module.css";
 import { Buffer } from "buffer";
 
-function ItemListShow({ searchTerm }) {
+function ItemListShow({ searchTerm, selectedGenre }) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -96,12 +96,18 @@ function ItemListShow({ searchTerm }) {
     return <div>No shows found</div>;
   }
 
-  const filteredItems = items.filter((item) =>
+  let filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  if (selectedGenre) {
+    filteredItems = filteredItems.filter((item) =>
+      item.genre.toLowerCase().includes(selectedGenre.toLowerCase())
+    );
+  }
+
   return (
-    <div>
+    <div className={styles.center}>
       {filteredItems.map((item) => (
         <div key={item.show_id} className={styles.item}>
           {item.poster && (
@@ -128,9 +134,11 @@ function ItemListShow({ searchTerm }) {
               <span>Number of episodes: </span>
               <span>{item.episodes}</span>
             </li>
-            <li key={`duration-${item.movie_id}`}>
-              <span>Synopsys: </span>
-              <span>{item.synopsys}</span>
+            <li key={`duration-${item.show_id}`}>
+              <span className={styles.synopsis}>
+                {" "}
+                Storyline: {item.synopsis}
+              </span>
             </li>
           </ul>
           <div className={styles.buttons}>

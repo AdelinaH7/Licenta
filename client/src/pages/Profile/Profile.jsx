@@ -11,10 +11,17 @@ function Profile() {
   const [userData, setUserData] = useState({});
   const [profilePicture, setProfilePicture] = useState("");
   const [lastMovieUpdates, setLastMovieUpdates] = useState([]);
+  const [totalDurationDays, setTotalDurationDays] = useState(0);
   const [lastShowUpdates, setLastShowUpdates] = useState([]);
+  const [totalEpisodesWatched, setTotalEpisodesWatched] = useState(0);
   const [updatedUsername, setUpdatedUsername] = useState("");
   const [editingUsername, setEditingUsername] = useState(false);
   const [meanScore, setMeanScore] = useState(0);
+  const [totalMovies, setTotalMovies] = useState(0);
+  const [totalShows, setTotalShows] = useState(0);
+  const [meanScoreShows, setMeanScoreShows] = useState(0);
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [favoriteShows, setFavoriteShows] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -51,6 +58,15 @@ function Profile() {
         );
         const data = await response.json();
         setLastMovieUpdates(data.slice(-3));
+
+        // Calculate total duration in minutes
+        const totalDurationMinutes = data.reduce(
+          (acc, movie) => acc + movie.duration,
+          0
+        );
+        // Convert total duration to days
+        const totalDurationDays = Math.floor(totalDurationMinutes / 1440); // Assuming 1 day = 1440 minutes
+        setTotalDurationDays(totalDurationDays); // Set the total duration in days state
       } catch (err) {
         console.log(err);
       }
@@ -70,6 +86,12 @@ function Profile() {
         );
         const data = await response.json();
         setLastShowUpdates(data.slice(-3));
+        // Calculate total number of episodes watched
+        const totalEpisodesWatched = data.reduce(
+          (acc, show) => acc + show.episodes,
+          0
+        );
+        setTotalEpisodesWatched(totalEpisodesWatched);
       } catch (err) {
         console.log(err);
       }
@@ -86,10 +108,58 @@ function Profile() {
         const data = await response.json();
         const userId = parseInt(localStorage.getItem("id"), 10); // Convert to number
         const userMovies = data.filter((movie) => movie.user_id === userId);
+        const favoriteMovies = userMovies.filter((movie) => movie.isFavourite);
         const scores = userMovies.map((movie) => movie.score);
         const sum = scores.reduce((acc, score) => acc + score, 0);
-        const mean = sum / scores.length || 0;
+        const mean = scores.length > 0 ? sum / scores.length : 0;
+        const totalMovies = userMovies.length;
+        console.log(favoriteMovies);
+
         setMeanScore(mean);
+        setFavoriteMovies(favoriteMovies);
+        setTotalMovies(totalMovies);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const fetchMeanScoreShows = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/juncShow", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        const userId = parseInt(localStorage.getItem("id"), 10); // Convert to number
+        const userShows = data.filter((show) => show.user_id === userId);
+        const scores = userShows.map((show) => show.score);
+        const sum = scores.reduce((acc, score) => acc + score, 0);
+        const mean = scores.length > 0 ? sum / scores.length : 0;
+        const totalShows = userShows.length;
+
+        setMeanScoreShows(mean);
+        setTotalShows(totalShows);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const fetchFavoriteShows = async () => {
+      try {
+        const userId = localStorage.getItem("id");
+        const response = await fetch(`http://localhost:8080/api/juncShow`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        const favoriteShows = data.filter(
+          (show) => show.user_id === userId && show.isFavourite
+        );
+        setFavoriteShows(favoriteShows);
       } catch (err) {
         console.log(err);
       }
@@ -99,6 +169,8 @@ function Profile() {
     fetchLastMovieUpdates();
     fetchLastShowUpdates();
     fetchMeanScore();
+    fetchMeanScoreShows();
+    fetchFavoriteShows();
   }, []);
 
   const handleUsernameClick = () => {
@@ -178,8 +250,8 @@ function Profile() {
                   </span>
                 )}
               </li>
+
               <li>
-                <span>Birthday: </span>
                 <span>{userData.birthday}</span>
               </li>
             </ul>
@@ -203,10 +275,10 @@ function Profile() {
               <div className={styles.statsMoviesOrShows}>
                 <h3>Movie Stats</h3>
                 <div className={styles.statScore}>
-                  <span>Days:</span>
-                  <span>Mean Score: {meanScore}</span>
+                  <span>Total Movies: {totalMovies}</span>
+                  <span>Days Watched: {totalDurationDays}</span>
+                  <span>Mean Score: {meanScore.toFixed(2)}</span>
                 </div>
-                <div className={styles.statGraph}></div>
               </div>
               <div className={styles.updatesMoviesOrShows}>
                 <h3>Last Movies Updates</h3>
@@ -222,10 +294,10 @@ function Profile() {
               <div className={styles.statsMoviesOrShows}>
                 <h3>Shows Stats</h3>
                 <div className={styles.statScore}>
-                  <span>Days: </span>
-                  <span>Mean Score: </span>
+                  <span>Total Shows: {totalShows}</span>
+                  <span>Episodes Watched: {totalEpisodesWatched}</span>
+                  <span>Mean Score: {meanScoreShows.toFixed(2)}</span>
                 </div>
-                <div className={styles.statGraph}></div>
               </div>
               <div className={styles.updatesMoviesOrShows}>
                 <h3>Last Shows Updates</h3>
@@ -236,14 +308,6 @@ function Profile() {
                 </ul>
               </div>
             </div>
-          </div>
-
-          <div className={styles.favoritesContainer}>
-            <h2>Favorites</h2>
-            <h3>Movies</h3>
-            <div className={styles.favSlide}></div>
-            <h3>Shows</h3>
-            <div className={styles.favSlide}></div>
           </div>
         </div>
       </div>

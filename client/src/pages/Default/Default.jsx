@@ -8,7 +8,7 @@ function Default() {
       <div className={styles.bgImage}></div>
       <div className={styles.container}>
         <div className={styles.default}>
-          <h1 className={styles.heading}>Welcome to Your Movie List</h1>
+          <h1 className={styles.heading}>Welcome to Your Watch List</h1>
 
           <div className={styles.buttons}>
             <Link to="/register">

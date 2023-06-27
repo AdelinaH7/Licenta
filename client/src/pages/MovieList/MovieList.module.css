@@ -11,6 +11,11 @@
   min-height: 120vh;
 }
 
+.filterBar {
+  display: flex;
+  align-items: center;
+}
+
 .searchBar {
   width: 40%;
   margin: 0 auto;
@@ -27,4 +32,26 @@
   padding: 8px;
   border: none;
   font-size: 14px;
+}
+
+.filterBar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.filterButton {
+  background-color: #2b2d42;
+  border: none;
+  color: #fff;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filterButton.active {
+  background-color: #d90429;
+  color: #fff;
 }
